@@ -6,37 +6,35 @@
 []
 
 [Variables]
-  [./u]
+  [./bob]
   [../]
 []
 
 [Kernels]
   [./diff]
-    type = Diffusion
-    variable = u
+    type = LaplaceYoung
+    variable = bob
   [../]
 []
 
 [BCs]
-  [./left]
-    type = DirichletBC
-    variable = u
-    boundary = left
-    value = 0
-  [../]
-  [./right]
-    type = DirichletBC
-    variable = u
-    boundary = right
-    value = 1
+  [./all_sides]
+    type = NeumannBC
+    variable = bob
+    boundary = 'left right top bottom'
+    value = 0.2
   [../]
 []
 
 [Executioner]
   type = Steady
   solve_type = 'PJFNK'
-  petsc_options_iname = '-pc_type -pc_hypre_type'
-  petsc_options_value = 'hypre boomeramg'
+  #solve_type = 'NEWTON'
+#  petsc_options_iname = '-pc_type -pc_hypre_type'
+#  petsc_options_value = 'hypre boomeramg'
+  petsc_options_iname = '-pc_type'
+  petsc_options_value = 'lu'
+
 []
 
 [Outputs]
